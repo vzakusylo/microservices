@@ -1,4 +1,4 @@
-﻿using Devspaces.Support;
+﻿
 using HealthChecks.UI.Client;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.ServiceFabric;
@@ -43,7 +43,6 @@ namespace Microsoft.eShopOnContainers.WebMVC
             services.AddAppInsight(Configuration)
                     .AddHealthChecks(Configuration)
                     .AddCustomMvc(Configuration)
-                    .AddDevspaces()
                     .AddHttpClientServices(Configuration)
                     //.AddHttpClientLogging(Configuration)  //Opt-in HttpClientLogging config
                     .AddCustomAuthentication(Configuration);

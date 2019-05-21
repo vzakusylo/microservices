@@ -37,14 +37,7 @@ services:
       - nosql.data      
       - rabbitmq
 
-  payment.api:
-    image: ${REGISTRY:-eshop}/payment.api:${PLATFORM:-linux}-${TAG:-latest}
-    build:
-      context: .
-      dockerfile: src/Services/Payment/Payment.API/Dockerfile
-    depends_on:
-      - rabbitmq    
-
+  
   locations.api:
     image: ${REGISTRY:-eshop}/locations.api:${PLATFORM:-linux}-${TAG:-latest}
     build:
