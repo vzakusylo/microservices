@@ -35,30 +35,7 @@ services:
     ports:
       - "80"   # The API Gateway redirects and access through the internal port (80). 
 
-    
-
-  marketing.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString=${ESHOP_AZURE_MARKETING_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.MarketingDb;User Id=sa;Password=Pass@word}
-      - MongoConnectionString=${ESHOP_AZURE_COSMOSDB:-mongodb://nosql.data}
-      - MongoDatabase=MarketingDb
-      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
-      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
-      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}                      
-      - CampaignDetailFunctionUri=${ESHOP_AZUREFUNC_CAMPAIGN_DETAILS_URI}
-      - PicBaseUrl=${ESHOP_AZURE_STORAGE_MARKETING_URL:-http://localhost:5110/api/v1/campaigns/[0]/pic/}
-      - AzureStorageAccountName=${ESHOP_AZURE_STORAGE_MARKETING_NAME}
-      - AzureStorageAccountKey=${ESHOP_AZURE_STORAGE_MARKETING_KEY}
-      - AzureServiceBusEnabled=False
-      - AzureStorageEnabled=False
-      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
-      - OrchestratorType=${ORCHESTRATOR_TYPE}
-      - UseLoadTest=${USE_LOADTEST:-False}
-    ports:
-      - "80"   # The API Gateway redirects and access through the internal port (80).
-      
+        
 
   webmvc:
     environment:
@@ -67,8 +44,7 @@ services:
       - PurchaseUrl=http://webshoppingapigw      
       - MarketingUrl=http://webmarketingapigw                                                    
       - CatalogUrlHC=http://catalog.api/hc      
-      - BasketUrlHC=http://basket.api/hc
-      - MarketingUrlHC=http://marketing.api/hc      
+      - BasketUrlHC=http://basket.api/hc       
       - UseCustomizationData=True
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -82,8 +58,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogUrl=http://catalog.api/hc            
       - BasketUrl=http://basket.api/hc      
-      - LocationsUrl=http://locations.api/hc
-      - MarketingUrl=http://marketing.api/hc      
+      
       - mvc=http://webmvc/hc      
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
@@ -92,21 +67,7 @@ services:
 
   
 
-  locations.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString=${ESHOP_AZURE_COSMOSDB:-mongodb://nosql.data}
-      - Database=LocationsDb            
-      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
-      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
-      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}          
-      - AzureServiceBusEnabled=False
-      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
-      - OrchestratorType=${ORCHESTRATOR_TYPE}
-      - UseLoadTest=${USE_LOADTEST:-False}
-    ports:
-      - "80"   # The API Gateway redirects and access through the internal port (80).
+  
 
   sql.data:
     environment:

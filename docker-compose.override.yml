@@ -56,62 +56,15 @@ services:
 
   
 
-  marketing.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString=${ESHOP_AZURE_MARKETING_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.MarketingDb;User Id=sa;Password=Pass@word}
-      - MongoConnectionString=${ESHOP_AZURE_COSMOSDB:-mongodb://nosql.data}
-      - MongoDatabase=MarketingDb
-      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
-      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
-      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}                
-      - IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
-      - CampaignDetailFunctionUri=${ESHOP_AZUREFUNC_CAMPAIGN_DETAILS_URI}
-      - PicBaseUrl=${ESHOP_AZURE_STORAGE_MARKETING_URL:-http://localhost:5110/api/v1/campaigns/[0]/pic/}
-      - AzureStorageAccountName=${ESHOP_AZURE_STORAGE_MARKETING_NAME}
-      - AzureStorageAccountKey=${ESHOP_AZURE_STORAGE_MARKETING_KEY}
-      - AzureServiceBusEnabled=False
-      - AzureStorageEnabled=False
-      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
-      - OrchestratorType=${ORCHESTRATOR_TYPE}
-      - UseLoadTest=${USE_LOADTEST:-False}
-    ports:
-      - "5110:80"   # Important: In a production environment your should remove the external port (5110) kept here for microservice debugging purposes. 
-                    # The API Gateway redirects and access through the internal port (80).
-
   
 
-  locations.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString=${ESHOP_AZURE_COSMOSDB:-mongodb://nosql.data}
-      - Database=LocationsDb      
-      - IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
-      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
-      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
-      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}          
-      - AzureServiceBusEnabled=False
-      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
-      - OrchestratorType=${ORCHESTRATOR_TYPE}
-      - UseLoadTest=${USE_LOADTEST:-False}
-    ports:
-      - "5109:80"   # Important: In a production environment your should remove the external port (5109) kept here for microservice debugging purposes. 
-                    # The API Gateway redirects and access through the internal port (80).
-  
-  
 
   
 
   webshoppingapigw:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development      
-      - CatalogUrlHC=http://catalog.api/hc      
-      - BasketUrlHC=http://basket.api/hc
-      - MarketingUrlHC=http://marketing.api/hc
-      
-      - LocationUrlHC=http://locations.api/hc
+      - CatalogUrlHC=http://catalog.api/hc            
     ports:
       - "5202:80"   
     volumes:
@@ -121,10 +74,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development      
       - CatalogUrlHC=http://catalog.api/hc      
-      - BasketUrlHC=http://basket.api/hc
-      - MarketingUrlHC=http://marketing.api/hc
-      
-      - LocationUrlHC=http://locations.api/hc
     ports:
       - "5203:80"   
     volumes:
@@ -150,11 +99,7 @@ services:
       - HealthChecks-UI__HealthChecks__10__Name=Basket HTTP Check
       - HealthChecks-UI__HealthChecks__10__Uri=http://basket.api/hc
       - HealthChecks-UI__HealthChecks__11__Name=Catalog HTTP Check
-      - HealthChecks-UI__HealthChecks__11__Uri=http://catalog.api/hc      
-      - HealthChecks-UI__HealthChecks__13__Name=Marketing HTTP Check
-      - HealthChecks-UI__HealthChecks__13__Uri=http://marketing.api/hc
-      - HealthChecks-UI__HealthChecks__14__Name=Locations HTTP Check
-      - HealthChecks-UI__HealthChecks__14__Uri=http://locations.api/hc      
+      - HealthChecks-UI__HealthChecks__11__Uri=http://catalog.api/hc          
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
@@ -169,8 +114,7 @@ services:
       - IdentityUrl=http://10.0.75.1:5105  # Local Mac: Use http://docker.for.mac.localhost:5105 || Local Windows:  Use 10.0.75.1 in a "Docker for Windows" environment, if using "localhost" from browser. || #Remote access: Use ${ESHOP_EXTERNAL_DNS_NAME_OR_IP} if using external IP or DNS name from browser.
       - MarketingUrl=http://webmarketingapigw                                                          
       - SignalrHubUrl=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5202      
-      - PurchaseUrlHC=http://webshoppingapigw/hc
-      - MarketingUrlHC=http://webmarketingapigw/hc 
+      - PurchaseUrlHC=http://webshoppingapigw/hc      
       - UseCustomizationData=True
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}

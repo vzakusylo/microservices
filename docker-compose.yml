@@ -26,28 +26,7 @@ services:
       - rabbitmq
 
 
-  
-  marketing.api:
-    image: ${REGISTRY:-eshop}/marketing.api:${PLATFORM:-linux}-${TAG:-latest}
-    build:
-      context: .
-      dockerfile: src/Services/Marketing/Marketing.API/Dockerfile    
-    depends_on:
-      - sql.data
-      - nosql.data      
-      - rabbitmq
-
-  
-  locations.api:
-    image: ${REGISTRY:-eshop}/locations.api:${PLATFORM:-linux}-${TAG:-latest}
-    build:
-      context: .
-      dockerfile: src/Services/Location/Locations.API/Dockerfile
-    depends_on:
-      - nosql.data
-      - rabbitmq
-
-          
+                
                 
 
   webshoppingapigw:
@@ -58,8 +37,7 @@ services:
     depends_on:
       - nosql.data
       - sql.data      
-      - rabbitmq      
-      - marketing.api
+      - rabbitmq            
       - catalog.api
       
 
@@ -71,13 +49,8 @@ services:
     depends_on:
       - nosql.data
       - sql.data      
-      - rabbitmq      
-      - marketing.api
+      - rabbitmq       
       - catalog.api
-      
-
- 
-
   
 
   webstatus:
