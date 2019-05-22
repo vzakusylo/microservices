@@ -41,8 +41,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - PurchaseUrl=http://webshoppingapigw      
-      - MarketingUrl=http://webmarketingapigw                                                    
+      - PurchaseUrl=http://webshoppingapigw            
       - CatalogUrlHC=http://catalog.api/hc      
       - BasketUrlHC=http://basket.api/hc       
       - UseCustomizationData=True
@@ -99,13 +98,4 @@ services:
     volumes:
       - ./src/ApiGateways/Web.Bff.Shopping/apigw:/app/configuration
 
-  webmarketingapigw:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development      
-    ports:
-      - "5203:80"   # Important: In a production environment your should remove the external port (5203) kept here for microservice debugging purposes. 
-                    # The API Gateway redirects and access through the internal port (80).
-    volumes:
-      - ./src/ApiGateways/Web.Bff.Marketing/apigw:/app/configuration
-        
   
